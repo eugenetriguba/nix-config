@@ -12,11 +12,15 @@ let
   imports = [
     ./home
   ];
+
+  mkHome = (
+    home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+
+      modules = [{ inherit imports; }];
+    }
+  );
 in
 {
-  home-manager.lib.homeManagerConfiguration {
-    inherit pkgs;
-
-    modules = [{ inherit imports; }];
-  };
+  eugene = mkHome;
 }

@@ -44,23 +44,14 @@ let
     eog       # Image viewer
     evince    # PDF reader
     nautilus  # File manager
-
-    # file manager overlay
-    # pkgs.nautilus-gtk3
-    #pkgs.nautilus-bin
-    #pkgs.nautilus-patched
   ];
 in
 {
   programs.home-manager.enable = true;
 
   imports = builtins.concatMap import [
-    # ./modules
-    # ./age
     # ./programs
-    # ./scripts
-    ./services
-    # ./themes
+    # ./services
   ];
 
   xdg = {
@@ -79,9 +70,6 @@ in
       EDITOR = "nvim";
     };
   };
-
-  # restart services on change
-  # systemd.user.startServices = "sd-switch";
 
   # Notifications about home-manager news
   news.display = "silent";
