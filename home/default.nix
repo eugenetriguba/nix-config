@@ -27,7 +27,6 @@ let
     jetbrains.clion       # Editor: JetBrains C IDE
     killall               # Kill processes by name
     libreoffice           # Office suite
-    mullvad               # Mullvad VPN CLI tools
     mullvad-vpn           # Mullvad VPN Client
     ncdu                  # Disk space info (a better du)
     neovim
