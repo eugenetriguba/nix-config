@@ -18,6 +18,13 @@
       fsType = "ext4";
     };
 
+  # Setup keyfile
+  boot.initrd.secrets = "/crypto_keyfile.bin" = null;
+
+  # Enable swap on luks
+  boot.initrd.luks.devices."luks-3cdf3904-836c-48b6-b883-4e04f836e82f".device = "/dev/disk/by-uuid/3cdf3904-836c-48b6-b883-4e04f836e82f";
+  boot.initrd.luks.devices."luks-3cdf3904-836c-48b6-b883-4e04f836e82f".keyFile = "/crypto_keyfile.bin";
+
   boot.initrd.luks.devices."luks-ba9b6470-29e1-4e88-b245-5a0052254ea7".device = "/dev/disk/by-uuid/ba9b6470-29e1-4e88-b245-5a0052254ea7";
 
   fileSystems."/boot/efi" =
