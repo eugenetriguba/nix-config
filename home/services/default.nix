@@ -10,7 +10,7 @@
     mullvad = {
       enable = true;
       package = "mullvad-vpn";
-    }
+    };
 
     # For using PGP keys
     gpg-agent = {

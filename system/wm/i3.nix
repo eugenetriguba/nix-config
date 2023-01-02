@@ -6,7 +6,8 @@
 
   hardware.bluetooth = {
     enable = true;
-    hsphfpd.enable = true;
+    # https://github.com/NixOS/nixpkgs/issues/114222
+    # hsphfpd.enable = true;
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
