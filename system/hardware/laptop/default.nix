@@ -13,21 +13,15 @@
     loader.efi.efiSysMountPoint = "/boot/efi";
   };
 
-  networking = {
-    hostName = "nixos-desktop";
-    interfaces = {
-      wlp0s20f3.useDHCP = true;
-      eno1.useDHCP = true;
-    };
-  };
-
   # Setup keyfile
   boot.initrd.secrets = {
     "/crypto_keyfile.bin" = null;
   };
 
   # Enable swap on luks
-  boot.initrd.luks.devices."luks-3cdf3904-836c-48b6-b883-4e04f836e82f".device = "/dev/disk/by-uuid/3cdf3904-836c-48b6-b883-4e04f836e82f";
-  boot.initrd.luks.devices."luks-3cdf3904-836c-48b6-b883-4e04f836e82f".keyFile = "/crypto_keyfile.bin";
+  boot.initrd.luks.devices."luks-e1a9bf3f-7b6b-4075-962f-225f1336d300".device = "/dev/disk/by-uuid/e1a9bf3f-7b6b-4075-962f-225f1336d300";
+  boot.initrd.luks.devices."luks-e1a9bf3f-7b6b-4075-962f-225f1336d300".keyFile = "/crypto_keyfile.bin";
 
+  networking.hostName = "nixos-laptop";
+  networking.interfaces.wlp114s0.useDHCP = true;
 }
