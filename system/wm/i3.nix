@@ -38,6 +38,7 @@
         extraPackages = with pkgs; [
           dmenu
           i3lock
+          i3status
           alacritty
           (python3Packages.py3status.overrideAttrs (oldAttrs: {
             propagatedBuildInputs = with python3Packages; [ pytz tzlocal ] ++ oldAttrs.propagatedBuildInputs;
