@@ -12,7 +12,7 @@
     {
       homeConfigurations = (
         import ./home-conf.nix {
-          inherit inputs system
+          inherit inputs system;
         }
       );
 
