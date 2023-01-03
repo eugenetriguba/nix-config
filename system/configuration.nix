@@ -20,7 +20,9 @@
     # firewall.allowedTCPPorts = [ ... ];
     # firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
-    firewall.enable = false;
+    firewall.enable = true;
+
+    wireguard.enable = true;
 
     # Configure network proxy if necessary
     # proxy.default = "http://user:password@proxy:port/";
@@ -68,6 +70,8 @@
       enable = true;
       drivers = [ pkgs.brlaser ];
     };
+    tlp.enable = true;
+    mullvad-vpn.enable = true;
   };
 
   # Enable Docker & VirtualBox support.
