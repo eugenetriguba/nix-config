@@ -4,8 +4,6 @@ let
       # Screenshots
       flameshot.enable = true;
 
-      # mullvad-vpn.enable = true;
-
       # For using PGP keys
       gpg-agent = {
         enable = true;
