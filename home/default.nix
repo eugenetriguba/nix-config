@@ -31,6 +31,7 @@ let
     ncdu                  # Disk space info (a better du)
     neovim
     powertop
+    python3
     ripgrep               # Fast grep
     rustup
     tldr                  # Simplified community-driven man pages
@@ -51,7 +52,7 @@ in
   programs.home-manager.enable = true;
 
   imports = builtins.concatMap import [
-    # ./programs
+    ./programs
     ./services
   ];
 
