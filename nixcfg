@@ -36,14 +36,27 @@ function nixcfg__help() {
     printf "usage: nixcfg <command>\n\n"
     printf "Nixcfg is used for working with this system's set of Nix configs.\n\n"
     printf "Commands\n"
+    printf "    build           Build the system and home\n"
     printf "    build_system    Build the local nix system configs\n"
     printf "    build_home      Build the local nix home configs and active them\n"
     printf "    help            Show this help menu"
 }
-function nixcfg__build_system() {
+
+function nixcfg__build() {
     local host="$1"
     if [ -z "$host" ]; then
         echo "usage: nixcfg build <hostname>"
+        exit 1
+    fi
+
+    nixcfg__build_system "$1"
+    nixcfg__build_home
+}
+
+function nixcfg__build_system() {
+    local host="$1"
+    if [ -z "$host" ]; then
+        echo "usage: nixcfg build_system <hostname>"
         exit 1
     fi
 
