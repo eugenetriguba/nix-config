@@ -55,6 +55,8 @@
     wget
     firejail
   ];
+  environment.binsh = "${pkgs.dash}/bin/dash";
+  programs.zsh.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -63,6 +65,7 @@
     enable = true;
     enableSSHSupport = true;
   };
+  programs.light.enable = true;
 
   # List services that you want to enable:
   services = {
@@ -72,6 +75,13 @@
     };
     tlp.enable = true;
     mullvad-vpn.enable = true;
+    actkbd = {
+      enable = true;
+      bindings = [
+        { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+	{ keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+      ];
+    };
   };
 
   # Enable Docker & VirtualBox support.
@@ -105,8 +115,9 @@
   users.users.eugene = {
     isNormalUser = true;
     description = "Eugene Triguba";
-    extraGroups = [ "docker" "networkmanager" "wheel" "lp" ];
+    extraGroups = [ "docker" "networkmanager" "wheel" "lp" "video" "audio" ];
     packages = with pkgs; [];
+    shell = pkgs.zsh;
   };
 
   # Allow unfree packages
