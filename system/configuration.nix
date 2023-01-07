@@ -92,6 +92,9 @@
         HandlePowerKey=suspend
       '';
     };
+    # Keychain
+    gnome3.gnome-keyring.enable = true;
+    gnome3.seahorse.enable = true;
   };
 
   # Enable Docker & VirtualBox support.
