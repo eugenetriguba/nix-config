@@ -95,6 +95,11 @@
     # Keychain
     gnome3.gnome-keyring.enable = true;
     gnome3.seahorse.enable = true;
+    # Use ed25519 algorithm for SSH
+    openssh.hostKeys = [{
+      path = "/etc/ssh/ssh_host_ed25519_key";
+      type = "ed25519";
+    }];
   };
 
   # Enable Docker & VirtualBox support.
