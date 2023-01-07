@@ -32,6 +32,7 @@ let
     neovim
     powertop
     python3
+    qbittorrent           # Torrent Client
     ripgrep               # Fast grep
     rustup
     tldr                  # Simplified community-driven man pages
