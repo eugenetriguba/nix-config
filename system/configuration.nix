@@ -8,7 +8,7 @@
   imports = 
     [
       ./wm/i3.nix
-    ];
+    ]; 
 
   networking = {
     networkmanager = {
@@ -81,6 +81,16 @@
         { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
 	{ keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
       ];
+    };
+    upower = {
+      enable = true;
+      criticalPowerAction = "Hibernate";
+    };
+    logind = {
+      lidSwitch = "suspend";
+      extraConfig = ''
+        HandlePowerKey=suspend
+      '';
     };
   };
 

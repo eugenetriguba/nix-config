@@ -16,8 +16,6 @@
   };
 
   services = {
-    upower.enable = true;
-
     dbus = {
       enable = true;
       packages = [ pkgs.dconf ];
