@@ -10,6 +10,8 @@
       ./wm/i3.nix
     ]; 
 
+  boot.kernelParams = [ "mem_sleep_default=deep" ];
+
   networking = {
     networkmanager = {
       enable = true;
@@ -73,7 +75,13 @@
       enable = true;
       drivers = [ pkgs.brlaser ];
     };
-    tlp.enable = true;
+    tlp = {
+      enable = true;
+      settings = {
+        START_CHARGE_THRESH_BAT0 = 40;
+        STOP_CHARGE_THRESH_BAT0 = 80;
+      };
+    };
     mullvad-vpn.enable = true;
     actkbd = {
       enable = true;
