@@ -2,6 +2,7 @@
 #
 # Entrypoint for working with this set of Nix configuration files.
 set -e
+set +x
 
 readonly NIX_CONFIG_SRC="/home/eugene/src/nix-config"
 

@@ -92,9 +92,7 @@
         HandlePowerKey=suspend
       '';
     };
-    # Keychain
-    gnome3.gnome-keyring.enable = true;
-    gnome3.seahorse.enable = true;
+    gnome.gnome-keyring.enable = true;
     # Use ed25519 algorithm for SSH
     openssh.hostKeys = [{
       path = "/etc/ssh/ssh_host_ed25519_key";
