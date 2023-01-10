@@ -22,6 +22,6 @@
   boot.initrd.luks.devices."luks-e1a9bf3f-7b6b-4075-962f-225f1336d300".device = "/dev/disk/by-uuid/e1a9bf3f-7b6b-4075-962f-225f1336d300";
   boot.initrd.luks.devices."luks-e1a9bf3f-7b6b-4075-962f-225f1336d300".keyFile = "/crypto_keyfile.bin";
 
-  networking.hostName = "nixos-laptop";
+  networking.hostName = "laptop";
   networking.interfaces.wlp114s0.useDHCP = true;
 }

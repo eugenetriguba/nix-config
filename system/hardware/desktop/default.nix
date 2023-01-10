@@ -14,7 +14,7 @@
   };
 
   networking = {
-    hostName = "nixos-desktop";
+    hostName = "desktop";
     interfaces = {
       wlp0s20f3.useDHCP = true;
       eno1.useDHCP = true;
