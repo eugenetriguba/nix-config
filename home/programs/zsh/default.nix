@@ -28,13 +28,9 @@ in
             ];
             oh-my-zsh = {
                 enable = true;
-                plugins = [
-                    "git"
-                ];
-                # theme = "powerlevel10k";
+                plugins = ["git"];
             };
             shellAliases = {
-                # Git
                 gs = "git status";
                 gc = "git commit";
                 ga = "git add";
@@ -47,7 +43,6 @@ in
                 gch = "git checkout";
                 gv = "git log --graph --decorate --oneline";
 
-                # General
                 h = "history 25";
                 j = "jobs -l";
                 l = "ls -al";
