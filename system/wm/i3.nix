@@ -16,6 +16,8 @@
   };
 
   services = {
+    blueman.enable = true;
+
     dbus = {
       enable = true;
       packages = [ pkgs.dconf ];
@@ -30,7 +32,7 @@
       desktopManager.xterm.enable = true;
       displayManager = {
         defaultSession = "none+i3";
-	gdm.enable = true;
+        gdm.enable = true;
       };
 
       windowManager.i3 = {

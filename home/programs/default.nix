@@ -1,4 +1,5 @@
 [
   ./git
   ./zsh
+  ./rofi
 ]
