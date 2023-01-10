@@ -1,72 +1,70 @@
-#!/usr/bin/env sh
-#
-# Entrypoint for working with this set of Nix configuration files.
-set -e
-set +x
+#!/usr/bin/env python3
+import argparse
+import socket
+import subprocess
 
-readonly NIX_CONFIG_SRC="/home/eugene/src/nix-config"
 
-function nixcfg() {
-	local cmdname="$1";
-    if [ -z "$cmdname" ]; then
-        nixcfg__help
-        exit 0
-    fi
-    shift  # Grab subcommand
+NIX_CONFIG_SRC="/home/eugene/src/nix-config"
 
-    if _is_valid_command "$cmdname"; then
-    	"nixcfg__$cmdname" "$@"
-	else
-        printf "Unrecognized command: $cmdname\n"
-        printf "Try 'nixcfg help' to see the list of available commands."
-        exit 1
-	fi
-}
+def main():
+    root_parser = argparse.ArgumentParser(
+        prog="nixcfg",
+        description="Work with this local system's Nix configuration files",
+    )
+    subparsers = root_parser.add_subparsers()
 
-function _is_valid_command() {
-    local subcommand="$1"
+    build_parser = subparsers.add_parser(
+        "install",
+        help="Build and install the current set of Nix configs",
+    )
+    build_parser.add_argument(
+        "-o", "--only",
+        choices=["home", "system"],
+        help=(
+            "Choose to restrict to only build and install a certain set "
+            "of configurations. Defaults to building and install all."
+        ),
+    )
+    build_parser.add_argument(
+        "--host",
+        default=socket.gethostname(),
+        choices=["desktop", "laptop"],
+        help=(
+            "Choose which host to build this set of configurations for. "
+            "This mainly matters for hardware configuration."
+        )
+    )
+    build_parser.set_defaults(func=_handle_install_command)
 
-    if type "nixcfg__$cmdname" > /dev/null 2>&1; then
-        return 0
-    else
-        return 1
-    fi
-}
+    args = root_parser.parse_args()
+    args.func(args)
 
-function nixcfg__help() {
-    printf "usage: nixcfg <command>\n\n"
-    printf "Nixcfg is used for working with this system's set of Nix configs.\n\n"
-    printf "Commands\n"
-    printf "    build           Build the system and home\n"
-    printf "    build_system    Build the local nix system configs\n"
-    printf "    build_home      Build the local nix home configs and active them\n"
-    printf "    help            Show this help menu"
-}
 
-function nixcfg__build() {
-    local host="$1"
-    if [ -z "$host" ]; then
-        echo "usage: nixcfg build <hostname>"
-        exit 1
-    fi
+def _handle_install_command(args: argparse.Namespace) -> None:
+    if not args.only or args.only == "system":
+        _install_system_configs(args.host)
 
-    nixcfg__build_system "$1"
-    nixcfg__build_home
-}
+    if not args.only or args.only == "home":
+        _install_home_configs()
 
-function nixcfg__build_system() {
-    local host="$1"
-    if [ -z "$host" ]; then
-        echo "usage: nixcfg build_system <hostname>"
-        exit 1
-    fi
 
-    sudo nixos-rebuild switch --flake "$NIX_CONFIG_SRC#$host"
-}
+def _install_system_configs(host: str) -> None:
+    _run_cmd(f"sudo nixos-rebuild switch --flake {NIX_CONFIG_SRC}#{host}")
 
-function nixcfg__build_home() {
-    nix build "$NIX_CONFIG_SRC#homeConfigurations.eugene.activationPackage"
-    "$NIX_CONFIG_SRC/result/activate"
-}
 
-nixcfg "$@"
+def _install_home_configs() -> None:
+    _run_cmd(
+        f'nix build "{NIX_CONFIG_SRC}#homeConfigurations.eugene.activationPackage"'
+    )
+    _run_cmd(f"{NIX_CONFIG_SRC}/result/activate")
+
+
+def _run_cmd(cmd: str) -> None:
+    proc = subprocess.Popen(cmd, shell=True)
+    return_code = proc.wait()
+    if return_code != 0:
+        raise EnvironmentError(f"Ran {cmd}, got return code {proc.returncode}.")
+
+
+if __name__ == "__main__":
+    main()
