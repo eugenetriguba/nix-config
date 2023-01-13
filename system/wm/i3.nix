@@ -37,8 +37,8 @@
 
       windowManager.i3 = {
         enable = true;
+        configFile = builtins.readFile ./config;
         extraPackages = with pkgs; [
-          dmenu
           rofi
           i3lock
           i3status
