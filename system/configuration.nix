@@ -75,6 +75,10 @@
       enable = true;
       drivers = [ pkgs.brlaser ];
     };
+    avahi = {
+      enable = true;
+      openFirewall = true;
+    };
     tlp = {
       enable = true;
       settings = {
