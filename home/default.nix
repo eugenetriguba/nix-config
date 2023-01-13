@@ -12,6 +12,7 @@ let
     dig                   # DNS command-line tool
     docker-compose        # Docker manager
     dive                  # Explore docker layers
+    dropbox
     duf                   # Disk usage/free utility
     exa                   # A better `ls`
     exercism              # Programming Practice: CLI for exercism.io
