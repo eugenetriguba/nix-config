@@ -30,6 +30,7 @@ let
     mullvad-vpn           # Mullvad VPN Client CLI + GUI
     ncdu                  # Disk space info (a better du)
     neovim
+    obsidian
     powertop
     python3
     qbittorrent           # Torrent Client

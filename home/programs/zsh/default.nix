@@ -52,6 +52,9 @@ in
                 vi = "nvim";
                 vim = "nvim";
             };
+            initExtra = ''
+                export PATH="$HOME/.local/bin:$PATH"
+            '';
         };
     };
 }
