@@ -129,14 +129,13 @@
   };
   users.extraGroups.vboxusers.members = [ "eugene" ];
 
-  # Enable sound.
-  sound = {
+  security.rtkit.enable = true;
+  services.pipewire = {
     enable = true;
-    mediaKeys.enable = true;
-  };
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
