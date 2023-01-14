@@ -56,6 +56,8 @@
     vim
     wget
     firejail
+    pamixer
+    pavucontrol
   ];
   environment.binsh = "${pkgs.dash}/bin/dash";
   programs.zsh.enable = true;
