@@ -92,8 +92,11 @@
     actkbd = {
       enable = true;
       bindings = [
+        { keys = [ 123 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/pamixer --increase 10"; }
+        { keys = [ 122 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/pamixer --decrease 10"; }
+        { keys = [ 121 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/pamixer --toggle-mute"; }
         { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
-	      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+        { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
       ];
     };
     upower = {
@@ -176,6 +179,16 @@
       keep-derivations = true;
     };
   };
+
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts.githubRelease
+    hack-font
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
