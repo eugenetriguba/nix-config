@@ -58,6 +58,7 @@ in
   imports = builtins.concatMap import [
     ./programs
     ./services
+    ./dconf
   ];
 
   xdg = {
