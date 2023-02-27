@@ -1,8 +1,6 @@
 let
   config =  {
     services = {
-      picom.enable = true;
-
       # Screenshots
       flameshot.enable = true;
 

@@ -7,7 +7,7 @@ import subprocess
 import sys
 import tempfile
 
-NIX_CONFIG_SRC=pathlib.Path(__file__).resolve().parent
+NIX_CONFIG_SRC=pathlib.Path(__file__).resolve().parent.parent
 
 def main():
     root_parser = argparse.ArgumentParser(
@@ -16,11 +16,11 @@ def main():
     )
     subparsers = root_parser.add_subparsers()
 
-    build_parser = subparsers.add_parser(
-        "install",
-        help="Build and install the current set of Nix configs",
+    switch_parser = subparsers.add_parser(
+        "switch",
+        help="Switch to the current set of Nix configs",
     )
-    build_parser.add_argument(
+    switch_parser.add_argument(
         "-o", "--only",
         choices=["home", "system"],
         help=(
@@ -28,7 +28,7 @@ def main():
             "of configurations. Defaults to building and install all."
         ),
     )
-    build_parser.add_argument(
+    switch_parser.add_argument(
         "--host",
         default=socket.gethostname(),
         choices=["desktop", "laptop"],
@@ -37,13 +37,7 @@ def main():
             "This mainly matters for hardware configuration."
         )
     )
-    build_parser.set_defaults(func=_handle_install_command)
-
-    edit_parser = subparsers.add_parser(
-        "edit",
-        help="Edit the Nix configuration files",
-    )
-    edit_parser.set_defaults(func=_handle_edit_command)
+    switch_parser.set_defaults(func=_handle_switch_command)
 
     if len(sys.argv) == 1:
         root_parser.print_help()
@@ -54,19 +48,19 @@ def main():
 
 
 
-def _handle_install_command(args: argparse.Namespace) -> None:
+def _handle_switch_command(args: argparse.Namespace) -> None:
     if not args.only or args.only == "system":
-        _install_system_configs(args.host)
+        _switch_to_system_configs(args.host)
 
     if not args.only or args.only == "home":
-        _install_home_configs()
+        _switch_to_home_configs()
 
 
-def _install_system_configs(host: str) -> None:
+def _switch_to_system_configs(host: str) -> None:
     _run_cmd(f"sudo nixos-rebuild switch --flake {NIX_CONFIG_SRC}#{host}")
 
 
-def _install_home_configs() -> None:
+def _switch_to_home_configs() -> None:
     _run_cmd(
         f'nix build "{NIX_CONFIG_SRC}#homeConfigurations.eugene.activationPackage"'
     )
@@ -78,11 +72,6 @@ def _run_cmd(cmd: str) -> None:
     return_code = proc.wait()
     if return_code != 0:
         raise EnvironmentError(f"Ran {cmd}, got return code {proc.returncode}.")
-
-
-def _handle_edit_command(args: argparse.Namespace) -> None:
-    EDITOR = os.environ.get("EDITOR", "vi")
-    subprocess.call([EDITOR, NIX_CONFIG_SRC])
 
 
 if __name__ == "__main__":

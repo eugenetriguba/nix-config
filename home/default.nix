@@ -15,17 +15,17 @@ let
     dropbox
     duf                   # Disk usage/free utility
     exa                   # A better `ls`
-    exercism              # Programming Practice: CLI for exercism.io
+    exercism              # CLI for exercism.io
     firefox               # Browser
     git                   # Source Control
     go                    # Go Programming language
-    glow                  # Terminal markdown viewer
     hack-font             # Monospace font
     htop                  # System resource usage TUI
     hyperfine             # Command-line benchmarking tool
     inter                 # Sans-Serif font
     jq                    # CLI tool for working with JSON
     jetbrains.clion       # Editor: JetBrains C IDE
+    jetbrains.pycharm-professional
     killall               # Kill processes by name
     libreoffice           # Office suite
     mullvad-vpn           # Mullvad VPN Client CLI + GUI
@@ -37,6 +37,7 @@ let
     qbittorrent           # Torrent Client
     ripgrep               # Fast grep
     rustup
+    speedtest-cli
     tldr                  # Simplified community-driven man pages
     tree                  # display files in a tree view    
     unzip

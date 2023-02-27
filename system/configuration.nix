@@ -5,12 +5,21 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports = 
-    [
-      ./wm/i3.nix
-    ]; 
-
   boot.kernelParams = [ "mem_sleep_default=deep" ];
+  boot.initrd.secrets = {
+    "/crypto_keyfile.bin" = null;
+  };
+
+  hardware.bluetooth = {
+    enable = true;
+    # https://github.com/NixOS/nixpkgs/issues/114222
+    # hsphfpd.enable = true;
+    settings = {
+      General = {
+        Experimental = "true";
+      };
+    };
+  };
 
   networking = {
     networkmanager = {
@@ -55,11 +64,8 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
-    firejail
-    pamixer
-    pavucontrol
   ];
-  environment.binsh = "${pkgs.dash}/bin/dash";
+
   programs.zsh.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -69,7 +75,6 @@
     enable = true;
     enableSSHSupport = true;
   };
-  programs.light.enable = true;
 
   # List services that you want to enable:
   services = {
@@ -81,40 +86,44 @@
       enable = true;
       openFirewall = true;
     };
-    tlp = {
+    blueman.enable = true;
+    dbus = {
       enable = true;
-      settings = {
-        START_CHARGE_THRESH_BAT0 = 40;
-        STOP_CHARGE_THRESH_BAT0 = 80;
-      };
+      packages = [ pkgs.dconf ];
     };
     mullvad-vpn.enable = true;
-    actkbd = {
-      enable = true;
-      bindings = [
-        { keys = [ 123 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/pamixer --increase 10"; }
-        { keys = [ 122 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/pamixer --decrease 10"; }
-        { keys = [ 121 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/pamixer --toggle-mute"; }
-        { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
-        { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
-      ];
-    };
-    upower = {
-      enable = true;
-      criticalPowerAction = "Hibernate";
-    };
-    logind = {
-      lidSwitch = "suspend";
-      extraConfig = ''
-        HandlePowerKey=suspend
-      '';
-    };
+    upower.enable = true;
     gnome.gnome-keyring.enable = true;
     # Use ed25519 algorithm for SSH
     openssh.hostKeys = [{
       path = "/etc/ssh/ssh_host_ed25519_key";
       type = "ed25519";
     }];
+    xserver = {
+      enable = true;
+      layout = "us";
+
+      displayManager = {
+        gdm.enable = true;
+        gdm.wayland = false;
+      };
+
+      desktopManager = {
+        gnome.enable = true;
+      };
+
+      libinput = {
+        enable = true;
+        mouse = {
+          naturalScrolling = true;
+        };
+        touchpad = {
+          tapping = true;
+          naturalScrolling = true;
+          disableWhileTyping = true;
+        };
+      };
+    };
   };
 
   # Enable Docker & VirtualBox support.
@@ -135,12 +144,13 @@
   users.extraGroups.vboxusers.members = [ "eugene" ];
 
   security.rtkit.enable = true;
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    jack.enable = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

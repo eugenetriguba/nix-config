@@ -1,7 +1,0 @@
-order += "wireless _first_"
-order += "time"
-
-wireless _first_ {
-  format_up = " %essid (%ip) "
-  format_down = ""
-}
